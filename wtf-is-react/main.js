@@ -14,14 +14,29 @@ class App extends React.Component {
     constructor(props) {
         super(props)
 
-        const languages = ['HTML5', 'Java', 'Ruby', 'JavaScript', 'PHP']
-
         this.state = {
-            languages: languages,
+            languages: [],
             filter: ''
         }
 
         this.handleFilter = this.handleFilter.bind(this)
+    }
+
+    componentWillMount() {
+        const self = this
+
+        fetch('http://www.mocky.io/v2/5a52153e2e00000722c03a57')
+            .then(function (data) {
+                return data.json()
+            }).then(function (data) {
+                self.setState(function () {
+                    return {
+                        languages: data.map(function (item) {
+                            return item.name
+                        })
+                    }
+                })
+            })
     }
 
     handleFilter(e) {
