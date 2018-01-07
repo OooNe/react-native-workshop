@@ -1,13 +1,16 @@
 /*global React, ReactDOM */
-
 function List(props) {
-    const languagesToShow = props.languages.filter(function (language) {
-        return language.includes(props.filter)
-    })
+    const languagesToShow = props.languages.filter(language => language.includes(props.filter))
 
-    return React.createElement('ul', null, languagesToShow.map(function(language, index) {
-        return React.createElement('li', { key: index }, React.createElement('a', { href: `/${language}` }, language))
-    }))
+    return (
+        <ul>
+            {languagesToShow.map((item, index) => (
+                <li>
+                    <a href={`/${item}`} key={index}>{item}</a>
+                </li>)
+            )}
+        </ul>
+    )
 }
 
 class App extends React.Component {
@@ -23,44 +26,36 @@ class App extends React.Component {
     }
 
     componentWillMount() {
-        const self = this
-
         fetch('http://www.mocky.io/v2/5a52153e2e00000722c03a57')
-            .then(function (data) {
-                return data.json()
-            }).then(function (data) {
-                self.setState(function () {
-                    return {
+            .then(data => data.json())
+            .then(data => {
+                this.setState(() => ({
                         languages: data.map(function (item) {
                             return item.name
                         })
-                    }
+                    }))
                 })
-            })
     }
 
     handleFilter(e) {
         const inputValue = e.target.value
 
-        this.setState(function () {
-            return {
+        this.setState(() => ({
                 filter: inputValue
-            }
-        })
+        }))
     }
 
     render() {
-        return React.createElement('div', null,
-            [
-                React.createElement('h1', null, 'Sample App'),
-                React.createElement('input', { onChange: this.handleFilter }),
-                React.createElement(List, { languages: this.state.languages, filter: this.state.filter })
-            ]
+        const { languages, filter } = this.state
+
+        return (
+            <div>
+                <h1>Sample App</h1>
+                <input type="text" onChange={this.handleFilter}/>
+                <List languages={languages} filter={filter} />
+            </div>
         )
     }
 }
 
-ReactDOM.render(
-    React.createElement(App, {toWhat: 'World'}, null),
-    document.getElementById('app')
-)
+ReactDOM.render(<App />, document.getElementById('app'))
