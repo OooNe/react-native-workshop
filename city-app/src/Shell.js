@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { ScrollView } from 'react-native'
-import { Drawer, Header, Body, Text, Right, Button, Icon, Title } from 'native-base'
+import { Drawer, Header, Body, Right, Button, Icon, Title } from 'native-base'
 import { AppLoading, Font } from 'expo'
 
 import Sidebar from './Sidebar'
@@ -52,9 +51,7 @@ export default class Shell extends PureComponent {
                         </Button>
                     </Right>
                 </Header>
-                <ScrollView>
-                    {this.props.children}
-                </ScrollView>
+                {this.props.children}
             </Drawer>
         )
     }

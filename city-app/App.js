@@ -1,17 +1,16 @@
 import React from 'react';
-import { View, Text } from 'react-native'
-import { Container } from 'native-base'
+import { Container, Content } from 'native-base'
 
 import Shell from './src/Shell'
+
+import NewsView from './src/views/News'
 
 export default class App extends React.Component {
     render() {
         return (
             <Container>
                 <Shell>
-                    <View>
-                        <Text>Hello World</Text>
-                    </View>
+                    <NewsView />
                 </Shell>
             </Container>
         )
