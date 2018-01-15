@@ -1,9 +1,13 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Drawer, Header, Body, Right, Button, Icon, Title } from 'native-base'
+import { Drawer, Header, Body, Right, Button, Icon, Title, Text } from 'native-base'
 import { AppLoading, Font } from 'expo'
+import { NativeRouter, Route, Link, BackButton } from 'react-router-native'
+
 
 import Sidebar from './Sidebar'
+import ReportView from "./views/Report";
+import NewsView from "./views/News";
 
 export default class Shell extends PureComponent {
     static propTypes = {
@@ -25,6 +29,10 @@ export default class Shell extends PureComponent {
         this._drawer._root.open()
     }
 
+    onDrawerClose = () => {
+        this._drawer._root.close()
+    }
+
     render() {
         if (!this.state.isReady) {
             return (
@@ -37,22 +45,27 @@ export default class Shell extends PureComponent {
         }
 
         return (
-            <Drawer
-                ref={(d) => this._drawer = d}
-                content={<Sidebar />}
-            >
-                <Header>
-                    <Body>
-                        <Title>Wrocław</Title>
-                    </Body>
-                    <Right>
-                        <Button onPress={this.onDrawerOpen} transparent>
-                            <Icon style={{ color: '#FFF' }} name='menu' />
-                        </Button>
-                    </Right>
-                </Header>
-                {this.props.children}
-            </Drawer>
+            <NativeRouter>
+                <Drawer
+                    ref={(d) => this._drawer = d}
+                    content={<Sidebar handleDrawerClose={this.onDrawerClose} />}
+                    onClose={this.onDrawerClose}
+                >
+                    <Header>
+                        <Body>
+                            <Title>Wrocław</Title>
+                        </Body>
+                        <Right>
+                            <Button onPress={this.onDrawerOpen} transparent>
+                                <Icon style={{ color: '#FFF' }} name='menu' />
+                            </Button>
+                        </Right>
+                    </Header>
+                    <BackButton />
+                    <Route exact path="/" component={NewsView}/>
+                    <Route path="/report" component={ReportView}/>
+                </Drawer>
+            </NativeRouter>
         )
     }
 }
