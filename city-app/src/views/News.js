@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { ScrollView, FlatList, Image, View } from 'react-native'
+import { ScrollView, FlatList, Image, View, DatePickerAndroid, Picker } from 'react-native'
 import { Container, Content, Card, CardItem, Text, Body, Left, Right, Icon } from 'native-base'
 import compose from 'lodash/fp/compose'
 import moment from 'moment'
@@ -12,12 +12,32 @@ class NewsView extends PureComponent {
         data: PropTypes.object
     }
 
+    async componentDidMount() {
+        // try {
+        //     const {action, year, month, day} = await DatePickerAndroid.open({
+        //         // Use `new Date()` for current date.
+        //         // May 25 2020. Month 0 is January.
+        //         date: new Date(2020, 4, 25)
+        //     });
+        //     if (action !== DatePickerAndroid.dismissedAction) {
+        //         // Selected year, month (0-11), day
+        //     }
+        // } catch ({code, message}) {
+        //     console.warn('Cannot open date picker', message);
+        // }
+    }
+
     render() {
         const { data } = this.props
 
         return (
             <Container>
                 <Content padder>
+                    <Picker>
+                        
+                        <Picker.Item label="Java" value="java" />
+                        <Picker.Item label="JavaScript" value="js" />
+                    </Picker>
                     <ScrollView>
                         <FlatList
                             data={data.newsitems.map(item => ({ ...item, key: item._id }))}

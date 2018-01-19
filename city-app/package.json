@@ -20,7 +20,9 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^6.2.2",
+    "exp": "^47.4.4",
     "expo": "^23.0.4",
+    "global": "^4.3.2",
     "lodash": "^4.17.4",
     "moment": "^2.20.1",
     "native-base": "^2.3.6",
